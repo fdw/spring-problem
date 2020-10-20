@@ -1,0 +1,63 @@
+plugins {
+    // Kotlin
+    id("org.jetbrains.kotlin.jvm") version '1.4.10' apply false
+    id("org.jetbrains.kotlin.plugin.spring") version '1.4.10' apply false
+
+    // Spring
+    id("org.springframework.boot") version "2.3.4.RELEASE" apply false
+    id("io.spring.dependency-management") version "1.0.10.RELEASE" apply false
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: "org.jetbrains.kotlin.jvm"
+    apply plugin: "org.jetbrains.kotlin.plugin.spring"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+
+    sourceCompatibility = 1.8
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = [("-Xjsr305=strict")]
+        }
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform {
+            excludeEngines 'junit-vintage'
+        }
+        reports {
+            junitXml.enabled = true
+            html.enabled = false
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR7")
+        }
+    }
+
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+        // Test
+        implementation("org.springframework.boot:spring-boot-starter-test") {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+}
