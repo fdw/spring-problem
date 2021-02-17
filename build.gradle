@@ -1,11 +1,11 @@
 plugins {
     // Kotlin
-    id("org.jetbrains.kotlin.jvm") version '1.4.10' apply false
-    id("org.jetbrains.kotlin.plugin.spring") version '1.4.10' apply false
+    id("org.jetbrains.kotlin.jvm") version '1.4.30' apply false
+    id("org.jetbrains.kotlin.plugin.spring") version '1.4.30' apply false
 
     // Spring
-    id("org.springframework.boot") version "2.3.4.RELEASE" apply false
-    id("io.spring.dependency-management") version "1.0.10.RELEASE" apply false
+    id("org.springframework.boot") version "2.4.2" apply false
+    id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
 }
 
 group 'org.example'
@@ -53,6 +53,8 @@ subprojects {
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-security")
+        implementation("org.springframework.boot:spring-boot-starter-actuator")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
         // Test

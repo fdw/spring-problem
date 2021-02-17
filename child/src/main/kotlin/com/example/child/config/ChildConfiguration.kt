@@ -6,6 +6,8 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.web.servlet.DispatcherServlet
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example.child.resty")
+@EnableWebSecurity
+@Import(SecurityConfiguration::class, WebConfiguration::class)
 class ChildConfiguration(private val animalProperties: AnimalProperties) {
     @Bean
     fun dispatcherServletRegistration(
