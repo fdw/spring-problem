@@ -14,8 +14,12 @@ private object Roles {
 @Order(2)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
-        http.requestMatchers().antMatchers("/**").and()
+        http
+            .httpBasic().and()
+            .requestMatchers()
+                .antMatchers("/**")
+                .and()
             .authorizeRequests()
-            .anyRequest().hasAnyRole(Roles.ADMIN, Roles.USER)
+                .anyRequest().hasAnyRole(Roles.ADMIN, Roles.USER)
     }
 }
