@@ -36,8 +36,10 @@ class ChildConfiguration(private val animalProperties: AnimalProperties) {
     }
 
     @Bean
-    fun springSecurityRegistration(applicationContext: WebApplicationContext, dispatcher: ServletRegistrationBean<DispatcherServlet>): FilterRegistrationBean<Filter> {
+    fun springSecurityRegistration(applicationContext: WebApplicationContext, dispatcher: ServletRegistrationBean<DispatcherServlet>): FilterRegistrationBean<DelegatingFilterProxy> {
         val springSecurityFilterChain = DelegatingFilterProxy(DEFAULT_FILTER_NAME, applicationContext)
-        return FilterRegistrationBean(springSecurityFilterChain, dispatcher)
+        val result = FilterRegistrationBean(springSecurityFilterChain, dispatcher)
+        result.setName(dispatcher.servletName + DEFAULT_FILTER_NAME)
+        return result
     }
 }
