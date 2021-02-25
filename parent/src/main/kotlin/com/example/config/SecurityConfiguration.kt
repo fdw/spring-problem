@@ -37,17 +37,17 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun parentUserDetails() : UserDetailsService {
-        val admin = User.builder()
+        val admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("verysecretpassword")
                 .roles(Roles.ADMIN)
                 .build()
-        val infra = User.builder()
+        val infra = User.withDefaultPasswordEncoder()
                 .username("infra")
                 .password("widelyknownpassword")
                 .roles(Roles.INFRA)
                 .build()
-        val user = User.builder()
+        val user = User.withDefaultPasswordEncoder()
                 .username("user")
                 .password("whatsapassword")
                 .roles(Roles.USER)
