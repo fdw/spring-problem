@@ -35,13 +35,13 @@ internal class ExampleApplicationTest {
     @Test
     fun requestChildContextWhenNotAuthenticatedThen401(@Autowired rest: TestRestTemplate) {
         val info = rest.getForEntity("/lizard/feed", String.javaClass)
-        assertThat(info.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
+        assertThat(info.statusCode).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
 
     @Test
     fun requestOtherChildContextWhenNotAuthenticatedThen401(@Autowired rest: TestRestTemplate) {
         val info = rest.getForEntity("/cat/feed", String.javaClass)
-        assertThat(info.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
+        assertThat(info.statusCode).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
 
 
