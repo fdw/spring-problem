@@ -21,8 +21,28 @@ internal class ExampleApplicationTest {
     }
 
     @Test
+    fun requestChildContextWhenAuthenticatedThen200(@Autowired rest: TestRestTemplate) {
+        val info = rest.withBasicAuth("admin", "verysecretpassword").getForEntity("/lizard/feed", String.javaClass)
+        assertThat(info.statusCode).isEqualTo(HttpStatus.OK)
+    }
+
+    @Test
+    fun requestOtherChildContextWhenNAuthenticatedThen200(@Autowired rest: TestRestTemplate) {
+        val info = rest.withBasicAuth("admin", "verysecretpassword").getForEntity("/cat/feed", String.javaClass)
+        assertThat(info.statusCode).isEqualTo(HttpStatus.OK)
+    }
+
+    @Test
     fun requestChildContextWhenNotAuthenticatedThen401(@Autowired rest: TestRestTemplate) {
         val info = rest.getForEntity("/lizard/feed", String.javaClass)
         assertThat(info.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
     }
+
+    @Test
+    fun requestOtherChildContextWhenNotAuthenticatedThen401(@Autowired rest: TestRestTemplate) {
+        val info = rest.getForEntity("/cat/feed", String.javaClass)
+        assertThat(info.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
+    }
+
+
 }
