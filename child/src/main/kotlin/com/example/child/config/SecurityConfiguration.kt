@@ -1,9 +1,11 @@
 package com.example.child.config
 
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.core.userdetails.UserDetailsService
 
 private object Roles {
     const val ADMIN = "ADMIN"
@@ -21,5 +23,10 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .and()
             .authorizeRequests()
                 .anyRequest().hasAnyRole(Roles.ADMIN, Roles.USER)
+    }
+
+    @Bean
+    fun userDetails(parentUserDetails: UserDetailsService) : UserDetailsService {
+        return parentUserDetails
     }
 }
