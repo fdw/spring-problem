@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 class AnimalController {
     @RequestMapping(value=["/feed"], method = [RequestMethod.GET])
     fun feedCuteAnimal(): String {
-        return "No more hungry."
+        return """{"message": "No more hungry."}"""
     }
 }
